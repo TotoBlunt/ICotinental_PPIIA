@@ -1,5 +1,6 @@
 import streamlit as st 
 import pandas as pd 
+import openpyxl
 
 #Titulo para el app
 st.title("K-Means Clustering con Streamlit")
