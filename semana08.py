@@ -4,6 +4,7 @@ import openpyxl
 from sklearn.preprocessing import StandardScaler
 from sklearn.cluster import KMeans
 import plotly.express as px
+from sklearn.decomposition import PCA
 
 #Titulo para el app
 st.title("K-Means Clustering con Analisis PCA usando Streamlit")
