@@ -34,7 +34,7 @@ if upload_file is not None:
             st.write('No se encontraron columnas categoricas en los datos')
 
         #Normalizar los datos
-        scaler = StandarScaler()
+        scaler = StandardScaler()
         df_scaled = scaler.fit_transform(df)
 
         #Seleccion del numero de clusters
