@@ -33,6 +33,21 @@ if upload_file is not None:
         else:
             st.write('No se encontraron columnas categoricas en los datos')
 
+        # Verificar valores faltantes
+        if df.isnull().values.any():
+            st.write("### Valores faltantes encontrados")
+            st.write(df.isnull().sum())
+            
+            # Manejo de valores faltantes
+            df = df.fillna(df.mean())
+
+            st.write("### Datos después de manejar valores faltantes")
+            st.write(df.head())
+
+        # Asegurar que todas las columnas sean numéricas
+        for col in df.columns:
+            df[col] = pd.to_numeric(df[col], errors='coerce')
+
         #Normalizar los datos
         scaler = StandardScaler()
         df_scaled = scaler.fit_transform(df)
@@ -51,14 +66,21 @@ if upload_file is not None:
         st.write('### Datos con el cluster asignado')
         st.write(df.head())
 
-        #Visualizacion de los cluster (Solo si tienen dos dimensiones)
-        if df_scaled.shape[1] >= 2:
-            df_plot = pd.DataFrame(df_scaled,columns=[f'PC{i+1}' for i in range(df_scaled.shape[1])])
-            df_plot['Cluster'] = clusters
-            fig = px.scatter(df_plot, x='PC1', y='PC2', color='Cluster', title='Visualizacion de Clusters')
-            st.plotly_chart(fig)
-        else:
-            st.write('Los datos deben tener al menos 2 columnas numericas para visualizar los cluster')
+            # Visualización de los clusters utilizando PCA
+        pca_df['Cluster'] = clusters
+        fig = px.scatter(pca_df, x='PC1', y='PC2', color='Cluster', title='Visualización de Clusters usando PCA')
+        st.plotly_chart(fig)
+
+        # Preparar el archivo CSV en memoria
+        csv = df.to_csv(index=False)
+
+        # Crear botón de descarga
+        st.download_button(
+            label="Descargar CSV con Resultados",
+            data=csv,
+            file_name='resultados_cluster.csv',
+            mime='text/csv'
+        )
 
 
     except Exception as e:
