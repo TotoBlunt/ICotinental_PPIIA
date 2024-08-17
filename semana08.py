@@ -42,7 +42,7 @@ if upload_file is not None:
         num_clusters = st.slider('Numero de cluster',min_value=2,max_value=10,value=3) # 3 por defecto
 
         #Aplicando el K-Means
-        kmeans = kmeans(num_clusters=num_clusters, random_state=42)
+        kmeans = KMeans(num_clusters=num_clusters, random_state=42)
         clusters = kmeans.fit_predict(df_scaled)
 
         #Añadir cluster al DF original
