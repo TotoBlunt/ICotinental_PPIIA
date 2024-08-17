@@ -6,7 +6,7 @@ from sklearn.cluster import KMeans
 import plotly.express as px
 
 #Titulo para el app
-st.title("K-Means Clustering con Streamlit")
+st.title("K-Means Clustering con Analisis PCA usando Streamlit")
 
 #Subir archivo de excel
 upload_file = st.file_uploader('Sube un archivo Excel',type=['xlsx'])
@@ -51,6 +51,19 @@ if upload_file is not None:
         #Normalizar los datos
         scaler = StandardScaler()
         df_scaled = scaler.fit_transform(df)
+
+            # Aplicar PCA para entender las componentes principales
+        pca = PCA(n_components=2)
+        principal_components = pca.fit_transform(df_scaled)
+        pca_df = pd.DataFrame(data=principal_components, columns=['PC1', 'PC2'])
+
+        st.write("### Varianza Explicada por cada Componente Principal:")
+        st.write(pca.explained_variance_ratio_)
+
+        st.write("### Cargas (Loadings) de las Variables en las Componentes Principales:")
+        loadings = pd.DataFrame(pca.components_.T, columns=['PC1', 'PC2'], index=df.columns)
+        st.write(loadings)
+
 
         #Seleccion del numero de clusters
         st.write('### Selecciona el numero de clusters')
