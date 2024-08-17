@@ -5,4 +5,4 @@ import pandas as pd
 st.title("K-Means Clustering con Streamlit")
 
 #Subir archivo de excel
-upload_file = st.file_uploader('Sube un archivo Excel',type=['xlsx']
+upload_file = st.file_uploader('Sube un archivo Excel',type=['xlsx'])
