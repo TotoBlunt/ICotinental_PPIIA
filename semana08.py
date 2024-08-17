@@ -45,7 +45,22 @@ if upload_file is not None:
         #Aplicando el K-Means
         kmeans = kmeans(num_clusters=num_clusters, random_state=42)
         clusters = kmeans.fit_predict(df_scaled)
- 
+
+        #Añadir cluster al DF original
+        df['Cluster'] = clusters
+
+        st.write('### Datos con el cluster asignado')
+        st.write(df.head())
+
+        #Visualizacion de los cluster (Solo si tienen dos dimensiones)
+        if df_scaled.shape[1] >= 2:
+            df_plot = pd.DataFrame(df_scaled,columns=[f'PC{i+1}' for i in range(df_scaled.shape[1])])
+            df_plot['Cluster'] = clusters
+            fig = px.scatter(df_plot, x='PC1', y='PC2', color='Cluster', title='Visualizacion de Clusters')
+            st.plotly_chart(fig)
+        else:
+            st.write('Los datos deben tener al menos 2 columnas numericas para visualizar los cluster')
+
 
     except Exception as e:
         st.error(f'Error al leer archivo excel: {e}')
