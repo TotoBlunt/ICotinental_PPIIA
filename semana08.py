@@ -1,8 +1,7 @@
 import streamlit as st 
 import pandas as pd 
 import openpyxl
-from sklearn.preprocessing import LabelEncoder
-from sklearn.preprocessing import StandarScaler
+from sklearn.preprocessing import StandardScaler
 from sklearn.cluster import KMeans
 import plotly.express as px
 
