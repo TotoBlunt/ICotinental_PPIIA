@@ -5,6 +5,7 @@ from sklearn.preprocessing import StandardScaler
 from sklearn.cluster import KMeans
 import plotly.express as px
 from sklearn.decomposition import PCA
+from sklearn.metrics import silhouette_score , davies_bouldin_score
 
 #Titulo para el app
 st.title("K-Means Clustering con Analisis PCA usando Streamlit")
@@ -88,7 +89,15 @@ if upload_file is not None:
         st.write('### Cantidad de datos por cluster')
         st.write(df.groupby('Cluster')['Cluster'].count().reset_index(name='count'))
 
-            # Visualización de los clusters utilizando PCA
+        #Metrica de Evaluacion
+        st.write ('### Metricas de Evaluacion')
+        silhouette = silhouette_score(df_scaled,kmeans.labels_)
+        davisbouldin = davies_bouldin_score(df_scaled,kmeans.labels_)
+        st.write(f'Coeficiente de Silhouette: {silhouette}')
+        st.write(f'Davies Boulding Score: {davisbouldin}')
+
+
+        # Visualización de los clusters utilizando PCA
         pca_df['Cluster'] = clusters
         fig = px.scatter(pca_df, x='PC1', y='PC2', color='Cluster', title='Visualización de Clusters usando PCA')
         st.plotly_chart(fig)
