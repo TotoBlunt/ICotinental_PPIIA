@@ -80,6 +80,10 @@ if upload_file is not None:
         st.write('### Datos con el cluster asignado')
         st.write(df.head())
 
+        #Cantidad de datos por cluster
+        st.write('### Cantidad de datos por cluster')
+        st.write(df.groupby('Cluster')['Cluster'].count().reset_index(name='count'))
+
             # Visualización de los clusters utilizando PCA
         pca_df['Cluster'] = clusters
         fig = px.scatter(pca_df, x='PC1', y='PC2', color='Cluster', title='Visualización de Clusters usando PCA')
