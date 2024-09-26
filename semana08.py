@@ -21,7 +21,7 @@ if upload_file is not None:
         st.write(df.head())
         #Cantidad de datos
         st.write('### Cantidad de datos del Dataframe')
-        st.write(f'Filas: {df.shape[0]}  Columnas: {df.shape[1]} ')
+        st.write(f'Filas: {df.shape[0]} \n Columnas: {df.shape[1]} ')
 
         #Seleccionar columnas categoricas
         categorical_columns = df.select_dtypes(include=['object']).columns.tolist()
